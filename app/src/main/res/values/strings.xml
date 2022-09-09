@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Finanças</string>
+    <string name="entrada">Entrada</string>
+    <string name="entrada_valor">R$ %1$s</string>
+    <string name="saida">Saída</string>
+    <string name="saida_valor">R$ %1$s</string>
+    <string name="total">Total</string>
+    <string name="total_valor">R$ %1$s</string>
+    <string name="sifrao">R$ 0,00</string>
+    <string name="nova_transacao">Nova Transação</string>
+    <string name="descricao">Descrição</string>
+    <string name="modal_regras">Use o sinal - (negativo) para despesas e , (virgula) para casas decimais</string>
+    <string name="valor">0,00</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="descricao_transacao">Descrição: %1$s - Valor R$ %2$s .</string>
+</resources>
