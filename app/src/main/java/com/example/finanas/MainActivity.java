@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 if(true){
                     transacaoEntrada(valor);
                 }
+                transacaoTotal(valor);
                 dialog.dismiss();
             }
         });
@@ -85,4 +86,12 @@ public class MainActivity extends AppCompatActivity {
         String text = String.format(getString(R.string.entrada_valor), valor);
         textViewEntradaSaldo.setText(text);
     }
+
+    void transacaoTotal(String valor){
+        TextView textViewTotalSaldo;
+        textViewTotalSaldo = findViewById(R.id.textViewTotalSaldo);
+        String text = String.format(getString(R.string.total_valor), valor);
+        textViewTotalSaldo.setText(text);
+    }
+
 }
