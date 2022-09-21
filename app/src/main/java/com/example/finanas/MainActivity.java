@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button openDialog;
     TextView transacao;
+    double saldo, entradaTotal, saidaTotal;
     ArrayList<Object> listaTransacoes = new ArrayList();
 
     @Override
@@ -50,32 +51,40 @@ public class MainActivity extends AppCompatActivity {
         //Initializing the views of the dialog.
         final EditText descricaoEt = dialog.findViewById(R.id.descricao);
         final EditText valorEt = dialog.findViewById(R.id.valor);
+
         Button submitConfirm = dialog.findViewById(R.id.submit_confirm);
         Button submitCancel = dialog.findViewById(R.id.submit_confirm);
 
         submitConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 String descricao = descricaoEt.getText().toString();
                 String valor = valorEt.getText().toString();
-                populateTransacao(descricao,valor);
-                if(true){
-                    transacaoEntrada(valor);
+                if(!valor.isEmpty()){
+                    double valorFloat = Double.parseDouble(String.valueOf(valor));
+                    saldo += valorFloat;
+                    if(!descricao.isEmpty() && valorFloat > 0){
+                        entradaTotal += valorFloat;
+                        populateTransacao(descricao, valor.toString());
+                        transacaoEntrada(Double.toString(entradaTotal));
+                        transacaoTotal(Double.toString(saldo));
+                    }
+                    if(!descricao.isEmpty() && valorFloat < 0){
+                        saidaTotal += valorFloat;
+                        populateTransacao(descricao,valor.toString());
+                        transacaoSaida(Double.toString(saidaTotal));
+                        transacaoTotal(Double.toString(saldo));
+                    }
                 }
-                transacaoTotal(valor);
                 dialog.dismiss();
             }
         });
-
         dialog.show();
     }
 
     void populateTransacao(String descricao, String valor) {
-
         transacao.setVisibility(View.VISIBLE);
-
         String text = String.format(getString(R.string.descricao_transacao), descricao, valor);
-
         listaTransacoes.add(text);
         transacao.setText(text);
     }
@@ -87,11 +96,17 @@ public class MainActivity extends AppCompatActivity {
         textViewEntradaSaldo.setText(text);
     }
 
+    void transacaoSaida(String valor){
+        TextView textViewSaidaSaldo;
+        textViewSaidaSaldo = findViewById(R.id.textViewSaidaSaldo);
+        String text = String.format(getString(R.string.saida_valor), valor);
+        textViewSaidaSaldo.setText(text);
+    }
+
     void transacaoTotal(String valor){
         TextView textViewTotalSaldo;
         textViewTotalSaldo = findViewById(R.id.textViewTotalSaldo);
         String text = String.format(getString(R.string.total_valor), valor);
         textViewTotalSaldo.setText(text);
     }
-
 }
