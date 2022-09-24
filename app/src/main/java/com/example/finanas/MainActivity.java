@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     void populateTransacao(String descricao, String valor) {
         transacao.setVisibility(View.VISIBLE);
         String text = String.format(getString(R.string.descricao_transacao), descricao, valor);
-        listaTransacoes.add(text);
+        //listaTransacoes.add(text);
         transacao.setText(text);
     }
 
