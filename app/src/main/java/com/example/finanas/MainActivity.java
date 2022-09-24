@@ -9,7 +9,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,10 +34,6 @@ public class MainActivity extends AppCompatActivity {
                 showModal();
             }
         });
-    }
-
-    public void newTransaction(View view) {
-
     }
 
     void showModal() {
@@ -71,17 +69,18 @@ public class MainActivity extends AppCompatActivity {
                 if (!valor.isEmpty()) {
                     double valorFloat = Double.parseDouble(String.valueOf(valor));
                     saldo += valorFloat;
-                    if (!descricao.isEmpty() && valorFloat > 0) {
+                    String saldoBRL = currencyFormat(saldo);
+                    if (valorFloat > 0) {
                         entradaTotal += valorFloat;
-                        populateTransacao(descricao, valor.toString());
-                        transacaoEntrada(Double.toString(entradaTotal));
-                        transacaoTotal(Double.toString(saldo));
+                        //populateTransacao(descricao, currencyFormat(valorFloat));
+                        transacaoEntrada(currencyFormat(entradaTotal));
+                        transacaoTotal(saldoBRL);
                     }
-                    if (!descricao.isEmpty() && valorFloat < 0) {
+                    if (valorFloat < 0) {
                         saidaTotal += valorFloat;
-                        populateTransacao(descricao, valor.toString());
-                        transacaoSaida(Double.toString(saidaTotal));
-                        transacaoTotal(Double.toString(saldo));
+                        //populateTransacao(descricao, currencyFormat(valorFloat));
+                        transacaoSaida(currencyFormat(saidaTotal));
+                        transacaoTotal(saldoBRL);
                     }
                 }
                 dialog.dismiss();
@@ -100,21 +99,26 @@ public class MainActivity extends AppCompatActivity {
     void transacaoEntrada(String valor) {
         TextView textViewEntradaSaldo;
         textViewEntradaSaldo = findViewById(R.id.textViewEntradaSaldo);
-        String text = String.format(getString(R.string.entrada_valor), valor);
+        String text = String.format(valor);
         textViewEntradaSaldo.setText(text);
     }
 
     void transacaoSaida(String valor) {
         TextView textViewSaidaSaldo;
         textViewSaidaSaldo = findViewById(R.id.textViewSaidaSaldo);
-        String text = String.format(getString(R.string.saida_valor), valor);
+        String text = String.format(valor);
         textViewSaidaSaldo.setText(text);
     }
 
     void transacaoTotal(String valor) {
         TextView textViewTotalSaldo;
         textViewTotalSaldo = findViewById(R.id.textViewTotalSaldo);
-        String text = String.format(getString(R.string.total_valor), valor);
+        String text = String.format(valor);
         textViewTotalSaldo.setText(text);
+    }
+
+    public static String currencyFormat(Double value) {
+        String currencyFormated = NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(value);
+        return currencyFormated;
     }
 }
