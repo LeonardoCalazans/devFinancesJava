@@ -9,14 +9,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     Button openDialog;
     TextView transacao;
-    double saldo, entradaTotal, saidaTotal;
+    double saldo = 0, entradaTotal, saidaTotal;
     ArrayList<Object> listaTransacoes = new ArrayList();
 
     @Override
@@ -53,7 +52,14 @@ public class MainActivity extends AppCompatActivity {
         final EditText valorEt = dialog.findViewById(R.id.valor);
 
         Button submitConfirm = dialog.findViewById(R.id.submit_confirm);
-        Button submitCancel = dialog.findViewById(R.id.submit_confirm);
+        Button submitCancel = dialog.findViewById(R.id.submit_cancel);
+
+        submitCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
 
         submitConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
